@@ -8,4 +8,8 @@
     <StartupObject>Dungeon.TestHarness</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DungeonLibrary\DungeonLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
