@@ -23,6 +23,7 @@ namespace DungeonLibrary
         private string _name;
         private int _bonusHitChance;
         private bool _isTwoHanded;
+        private WeaponType _weaponClass;
 
 
         //Properties - 1 for each field
@@ -61,6 +62,11 @@ namespace DungeonLibrary
             get { return _isTwoHanded; }
             set { _isTwoHanded = value; }
         }
+        public WeaponType WeaponClass
+        { 
+            get { return _weaponClass; }
+            set { _weaponClass = value; }
+        }
 
 
         //Constructors
@@ -69,7 +75,7 @@ namespace DungeonLibrary
         public Weapon() { }//Default
 
         //Qualified ctor, ready for its job
-        public Weapon(int maxDamage, int minDamage, string name, int bonusHitChance, bool isTwoHanded)
+        public Weapon(int maxDamage, int minDamage, string name, int bonusHitChance, bool isTwoHanded, WeaponType weaponClass)
         {
             //Assignment/Mapping (assignment)
             //Property = parameter
@@ -79,6 +85,7 @@ namespace DungeonLibrary
             Name = name;
             BonusHitChance = bonusHitChance;
             IsTwoHanded = isTwoHanded;
+            WeaponClass = weaponClass;
         }
 
 
@@ -91,7 +98,8 @@ namespace DungeonLibrary
                 $"Min Damage: {MinDamage}\n" +
                 $"Name: {Name}\n" +
                 $"Bonus Hit Chance: {BonusHitChance}\n"+
-                $"Two Handed: {IsTwoHanded}";
+                $"Two Handed: {IsTwoHanded}\n"+
+                $"Weapon Class: {WeaponClass}";
         }//end ToString()
 
 

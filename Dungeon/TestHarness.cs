@@ -19,6 +19,8 @@ namespace Dungeon
 
 
 
+
+
             //Weapon test
             Weapon firstWeapon = new Weapon();
             firstWeapon.MaxDamage = 10;
@@ -26,6 +28,9 @@ namespace Dungeon
             firstWeapon.Name = "Best Friend Sword";
             firstWeapon.BonusHitChance = 10;
             firstWeapon.IsTwoHanded = true;
+            firstWeapon.WeaponClass = WeaponType.Long_Sword;//input the Weapon Class
+
+           
 
             Console.WriteLine(firstWeapon);
 
