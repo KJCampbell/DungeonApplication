@@ -1,6 +1,8 @@
 ﻿namespace DungeonLibrary
 {
-    public class Character
+    //"Abstract" denotes an "incomplete" class or method.
+    //This tells the program that we will not create any Character objects directly. It is a starting point
+    public abstract class Character
     {
         //Fields
 
@@ -18,7 +20,7 @@
         int _block;
 
         //Properties - 1 for each field
-        private int Life
+        public int Life
         {
             get { return _life; }
             set
@@ -33,22 +35,22 @@
                 }
             }
         }
-        private int MaxLife
+        public int MaxLife
         {
             get { return _maxLife; }
             set { _maxLife = value; }
         }
-        private string Name
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-        private int HitChance
+        public int HitChance
         {
             get { return _hitChance; }
             set { _hitChance = value; }
         }
-        private int Block
+        public int Block
         {
             get { return _block; }
             set { _block = value; }
@@ -59,13 +61,13 @@
         public Character() { }
 
         //Fully qualified Ctor
-        public Character(int maxLife, int life, string name, int hitChance, int block)
+        public Character(int maxLife, string name, int hitChance, int block)
         {
             //Assignment/Mapping (assignment)
             //Property = parameter
             //White = blue
             MaxLife = maxLife;
-            Life = life;
+            Life = maxLife;
             Name = name;
             HitChance = hitChance;
             Block = block;
@@ -79,29 +81,26 @@
             //return base.ToString();
 
             return $"MaxLife: {MaxLife}\n" +
-                   $"Life: {Life}\n" +
+                   $"Life: {Life} of {MaxLife}\n"+
                    $"Name: {Name}\n" +
                    $"HitChance: {HitChance}\n" +
                    $"Block: {Block}\n";
         }
 
         //CalcBlock() returns an int -> return Block;
-        public int CalcBlock()
+        public virtual int CalcBlock()
         {
             return Block;
         }
 
         //CalcHitChance() returns an int - return HitChance;
-        public int CalcHitChance()
+        public virtual int CalcHitChance()
         {
             return HitChance;
         }
 
         //CalcDamage() returns an int -> return 0;
-        public int CalcDamage()
-        {
-            return 0;
-        }
+        public abstract int CalcDamage();//an abstract just says somewhere down the line, one of the child classes MUST impliment this with some functionality.
 
     }//end class
 }//end namespace
