@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DungeonLibrary
 {
     //Replace Class with enum
-    public enum Races
+    public enum Race
     {
         Human = 1,
         Elf = 2,
