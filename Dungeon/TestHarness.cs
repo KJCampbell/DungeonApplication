@@ -22,6 +22,7 @@ namespace Dungeon
 
 
             //Weapon test
+            Console.WriteLine("============WEAPON SPAWN============");
             Weapon firstWeapon = new Weapon();
             firstWeapon.MaxDamage = 10;
             firstWeapon.MinDamage = 5;
@@ -33,13 +34,13 @@ namespace Dungeon
            
 
             Console.WriteLine(firstWeapon);
-
             Console.WriteLine();
 
 
 
             //Character test
-            Player proto = new Player(50, "Proto", 70, 15,Race.Goblin,firstWeapon);
+            Console.WriteLine("============PLAYER SPAWN============");
+            Player proto = new Player( "Proto", 70, 15, 50, Race.Goblin,firstWeapon);
             Console.WriteLine();
             Console.WriteLine(proto);
             //Methods test
@@ -51,8 +52,12 @@ namespace Dungeon
 
 
             //Monster test
-            Monster bat = new Monster(20, "Bat", 20, 2, 4, 2, "a small flappy= rat");
-            Console.WriteLine(bat);
+            Console.WriteLine("============MONSTER SPAWN============");
+            Console.WriteLine(Monster.GetMonster());
+            Monster monster = Monster.GetMonster();
+
+            Console.WriteLine("\n\n*****************************************COMBAT\n\n");
+            Combat.DoBattle(proto, monster);
         }//end Main()
     }//end class
 }//end namespace

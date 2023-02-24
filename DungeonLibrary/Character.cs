@@ -61,7 +61,7 @@
         public Character() { }
 
         //Fully qualified Ctor
-        public Character(int maxLife, string name, int hitChance, int block)
+        public Character(string name, int hitChance, int block, int maxLife)
         {
             //Assignment/Mapping (assignment)
             //Property = parameter

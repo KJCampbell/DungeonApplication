@@ -16,7 +16,7 @@ namespace DungeonLibrary
 
 
         //Constructors
-        public Player(int maxLife, string name, int hitChance, int block, Race playerRace, Weapon equippedWeapon) : base (maxLife, name, hitChance, block)
+        public Player(string name, int hitChance, int block, int maxLife, Race playerRace, Weapon equippedWeapon) : base (name, hitChance, block, maxLife)
         {
             PlayerRace = playerRace;
             EquippedWeapon = equippedWeapon;
@@ -27,7 +27,7 @@ namespace DungeonLibrary
                     //BASIC
                     break;
                 case Race.Elf:
-                    //TODO figure out speed or somethin?
+                    //TODO figure out initive or somethin?
                     break;
                 case Race.Goblin:
                     HitChance += 5;

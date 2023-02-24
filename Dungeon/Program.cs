@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using DungeonLibrary;
+using System.Reflection;
 
 namespace Dungeon
 {
@@ -17,10 +18,12 @@ namespace Dungeon
             //TODO Score Variable
             int score = 0;
             //TODO Weapon creation
-
+            //Possible expansion - Display a list of pre-created weapons and let them pick one or pick one randomly
+            Weapon sword = new Weapon(8, 1, "Gladius", 10, false, WeaponType.Short_Sword);
             //Player Object creation
-
-
+            //Potential expansion - allow them to enter their own name
+            //show them possible races and let them pick one.
+            Player player = new("Muffin", 70, 5, 40, Race.Human, sword);
             #endregion
 
             #region Main Game Loop
@@ -32,8 +35,8 @@ namespace Dungeon
                 //Console.WriteLine("Outer" + ++outerCount);
                 //TODO Generate a random room
                 Console.WriteLine(GetRoom());
-                //TODO select a random monster to inhabit the room
-                Console.WriteLine("Here's a monster!");
+                Monster monster = Monster.GetMonster();
+                Console.WriteLine($"In this room {monster.Name}!");
 
 
                 #region Gameplay Menu Loop
@@ -42,7 +45,7 @@ namespace Dungeon
                 do
                 {
                     //Console.WriteLine("Inner" + ++innerCount);
-                    //TODO Gameplay Menu
+                    //Gameplay Menu
                     #region Menu
                     Console.Write("\nPlease choose an action:\n" +
                         "A) Attack\n" +
@@ -55,21 +58,44 @@ namespace Dungeon
                     switch (userChoice)
                     {
                         case ConsoleKey.A:
-                            //TODO Combat
-                            Console.WriteLine("ATTACK!");
+                            //Combat
+                            //Potential Expansion : weapon/race bonus attack
+                            //IDEAS IDEAS
+                            Combat.DoBattle(player, monster);
+                            //check if the monster is dead
+                            if (monster.Life <= 0)
+                            {
+                                //Combat rewards, inventory system. money health whatever
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"\nYou killed {monster.Name}!");
+                                Console.ResetColor();
+                                reload = true;
+                                score++;
+                            }
+                            //TODO Check player life
+                            if (player.Life <= 0)
+                            {
+                                Console.WriteLine("Death calls. You picked up the phone.\a");
+                                exit = true;
+                            }
                             break;
                         case ConsoleKey.R:
                             //TODO Attack of Opprotunity
                             Console.WriteLine("Run away!!");
+                            Console.WriteLine($"{monster.Name} attacks you as you flee!");
+                            Combat.DoAttack(monster, player);
+                            Console.WriteLine();//Formatting
                             reload = true;
                             break;
                         case ConsoleKey.P:
                             //TODO Player info
                             Console.WriteLine("Player Info: ");
+                            Console.WriteLine(player);
                             break;
                         case ConsoleKey.M:
                             //TODO Monster info
                             Console.WriteLine("Monster info: ");
+                            Console.WriteLine(monster);
                             break;
                         case ConsoleKey.X:
                         case ConsoleKey.E:
@@ -87,8 +113,6 @@ namespace Dungeon
                     #endregion
                 } while (!reload && !exit); //If either exit or reload is true, the inner loop will exit.
                 #endregion
-                //TODO Check player life
-
             } while (!exit); //If exit is true, the outer loop is exit as well.
 
             //Show the score
@@ -105,7 +129,7 @@ namespace Dungeon
 
             string[] rooms =
             {
-                "1","2","3","4","5"
+                "A stinky cave","A dusty library","TRAMPOLINE?!?!","Treasure room","I dunno"
             };
 
             Random rand = new Random();
