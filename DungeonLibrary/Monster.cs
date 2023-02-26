@@ -13,6 +13,8 @@ namespace DungeonLibrary
         //Fields
         int _minDamage;
         int _maxDamage;
+        //Revive condition for potential bosses and zombie
+        bool twoStage;
         //Properties
         public int MaxDamage
         {
@@ -20,7 +22,7 @@ namespace DungeonLibrary
             set { _maxDamage = value; }
         }
         public string Describe { get; set; } = null!;
-        private int MinDamage
+        public int MinDamage
         {
             get { return _minDamage; }
             set
@@ -35,13 +37,22 @@ namespace DungeonLibrary
                 }
             }
         }
-
+        public bool TwoStage 
+        {
+            get { return twoStage; }
+            set { twoStage = value; }
+        }
         //Constructors
-        public Monster(string name, int hitChance, int block, int maxLife, int maxDamage, int minDamage, string describe) : base(name, hitChance, block, maxLife)
+        public Monster()
+        {
+
+        }//empty ctor for children
+        public Monster(string name, int hitChance, int block, int maxLife, int maxDamage, int minDamage, string describe, bool twoStage) : base(name, hitChance, block, maxLife)
         {
             MaxDamage = maxDamage;
             MinDamage = minDamage;
             Describe = describe;
+            TwoStage = twoStage;
 
         }
 
@@ -65,15 +76,15 @@ namespace DungeonLibrary
         public static Monster GetMonster()
         {
             //Create a variety of monsters
-            Monster m1 = new(name: "White Rabbit", hitChance: 50, block: 20, maxLife: 25, maxDamage: 8, minDamage: 2, describe: "Thats no ordinary rabbit! Look at those bones!");
-            Monster m2 = new(name: "Dracula", hitChance: 70, block: 8, maxLife: 30, maxDamage: 8, minDamage: 1, describe: "Father of all the undead");
-            Monster m3 = new(name: "Mikey", hitChance: 50, block: 10, maxLife: 25, maxDamage: 4, minDamage: 1, describe: "No longer a teenager, but he is still a mutant turtle.");
-            Monster m4 = new(name: "Smaug", hitChance: 65, block: 20, maxLife: 20, maxDamage: 15, minDamage: 1, describe: "The last great dragon.");
+            Wolf m1 = new Wolf();
+            Bunny m2 = new Bunny();
+            Zombie m3 = new Zombie();
+            Monster m4 = new(name: "Smaug", hitChance: 65, block: 20, maxLife: 20, maxDamage: 15, minDamage: 1, describe: "The last great dragon.", false);
 
 
             List<Monster> monsters = new()
             {
-                m1,m1,
+                m1,m1,m1,m1,
                 m2,m2,m2,m2,
                 m3,m3,m3,
                 m4,
@@ -81,6 +92,7 @@ namespace DungeonLibrary
             //Pick one at random to place in our dungeon room
             return monsters[new Random().Next(monsters.Count)];
         }
-        
+
+
     }
 }

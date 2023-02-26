@@ -81,7 +81,7 @@
             //return base.ToString();
 
             return $"MaxLife: {MaxLife}\n" +
-                   $"Life: {Life} of {MaxLife}\n"+
+                   $"Life: {Life} of {MaxLife}\n" +
                    $"Name: {Name}\n" +
                    $"HitChance: {HitChance}\n" +
                    $"Block: {Block}\n";
