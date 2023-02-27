@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -31,7 +33,7 @@ namespace Dungeon
             firstWeapon.IsTwoHanded = true;
             firstWeapon.WeaponClass = WeaponType.Long_Sword;//input the Weapon Class
 
-           
+
 
             Console.WriteLine(firstWeapon);
             Console.WriteLine();
@@ -40,7 +42,7 @@ namespace Dungeon
 
             //Character test
             Console.WriteLine("============PLAYER SPAWN============");
-            Player proto = new Player( "Proto", 70, 15, 50, Race.Goblin,firstWeapon);
+            Player proto = new Player("Proto", 70, 15, 50, Race.Goblin, firstWeapon);
             Console.WriteLine();
             Console.WriteLine(proto);
             //Methods test
@@ -57,7 +59,28 @@ namespace Dungeon
             Monster monster = Monster.GetMonster();
 
             Console.WriteLine("\n\n*****************************************COMBAT\n\n");
-            Combat.DoBattle(proto, monster);
-        }//end Main()
+
+
+        
+
+            /*
+             * public damage roll calcdamage
+             *get block chance
+             *hit chance
+             *randomize damage
+             *
+             *damageroll dr = new damageroll(10,72)
+             *return dr;
+             * 
+             * 
+             * public class damage roll
+             *  public int damage  get set
+             *  public int random number get set
+             * 
+             */
+
+
+
+            }//end Main()
     }//end class
 }//end namespace
