@@ -1,5 +1,6 @@
 ﻿using DungeonLibrary;
 using System.Reflection;
+using System.Threading.Channels;
 
 namespace Dungeon
 {
@@ -39,7 +40,7 @@ namespace Dungeon
                 Console.WriteLine($"In this room {monster.Name}!");
 
 
-                #region Gameplay Menu Loop
+                #region Gameplay Menu Loop 
                 //CNTRL +K+S to surround with region
                 bool reload = false;
                 do
@@ -66,17 +67,11 @@ namespace Dungeon
                             if (monster.Life <= 0)
                             {
                                 //Combat rewards, inventory system. money health whatever
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine($"\nYou killed {monster.Name}!");
-                                Console.ResetColor();
-                                reload = true;
-                                score++;
-                            }
-                            //TODO Check player life
-                            if (player.Life <= 0)
-                            {
-                                Console.WriteLine("Death calls. You picked up the phone.\a");
-                                exit = true;
+                                 Console.ForegroundColor = ConsoleColor.Green;
+                                 Console.WriteLine($"\nYou killed {monster.Name}!");
+                                 Console.ResetColor();
+                                 reload = true;
+                                 score++;
                             }
                             break;
                         case ConsoleKey.R:
@@ -109,6 +104,12 @@ namespace Dungeon
                         default:
                             break;
                     }//end menu switch
+                    //TODO Check player life
+                    if (player.Life <= 0)
+                    {
+                        Console.WriteLine("Death calls. You picked up the phone.\a");
+                        exit = true;
+                    }
 
                     #endregion
                 } while (!reload && !exit); //If either exit or reload is true, the inner loop will exit.
