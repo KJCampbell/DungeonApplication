@@ -1,6 +1,13 @@
 ﻿using DungeonLibrary;
+using System.Diagnostics.Metrics;
+using System.Drawing;
+using System.IO;
+using System;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading.Channels;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Dungeon
 {
@@ -37,6 +44,10 @@ namespace Dungeon
                 //TODO Generate a random room
                 Console.WriteLine(GetRoom());
                 Monster monster = Monster.GetMonster();
+                //TODO MadLibs Room
+                //Use a list/array to generate "themes" for rooms and a "generic" room description.
+
+
                 Console.WriteLine($"In this room {monster.Name}!");
 
 
@@ -72,6 +83,7 @@ namespace Dungeon
                                  Console.ResetColor();
                                  reload = true;
                                  score++;
+                                //TODO Utalize the score counter to determine when a boss fight will occur. 
                             }
                             break;
                         case ConsoleKey.R:
@@ -127,18 +139,94 @@ namespace Dungeon
 
         private static string GetRoom()
         {
+            string[] template = new string[6];
+
+            //using a random number for themed here, a set of values can be assigned to the template string.
+            Random th = new Random();
+            int themed = th.Next(1, 6);
+            switch (themed)
+            {
+                case 1:
+                    //Moist theme
+                    template[0] = " flooded";
+                    template[1] = "damp";
+                    template[2] = "waterlogged";
+                    template[3] = "soaked";
+                    template[4] = "filthy";
+                    template[5] = "moist";
+                    break;
+
+                case 2:
+                    //Dusty theme
+                    template[0] = " dirty";
+                    template[1] = "creaking";
+                    template[2] = "worn out";
+                    template[3] = "ragged";
+                    template[4] = "filthy";
+                    template[5] = "shredded";
+                    break;
+
+                case 3:
+                    //Blazing theme
+                    template[0] = "n enflamed";
+                    template[1] = "charred";
+                    template[2] = "ash covered";
+                    template[3] = "seared";
+                    template[4] = "burnt";
+                    template[5] = "crispy";
+                    break;
+
+                case 4:
+                    //Weird theme
+                    template[0] = " warped";
+                    template[1] = "upside down";
+                    template[2] = "distorted";
+                    template[3] = "ragged";
+                    template[4] = "filthy";
+                    template[5] = "shredded";
+                    break;
+
+                case 5:
+                    //Spooky theme
+                    template[0] = " dirty";
+                    template[1] = "decrepid";
+                    template[2] = "worn out";
+                    template[3] = "ragged";
+                    template[4] = "filthy";
+                    template[5] = "shredded";
+                    break;
+
+                default:
+                    //Placeholders 
+                    template[0] = " General room descriptor";
+                    template[1] = "Door descriptor";
+                    template[2] = "Objects in room";
+                    template[3] = "Placeholder";
+                    template[4] = "Placeholder";
+                    template[5] = "Placeholder";
+                    break;
+            }
 
             string[] rooms =
             {
-                "A stinky cave","A dusty library","TRAMPOLINE?!?!","Treasure room","I dunno"
+                //Dungeon string NOT FULLY CHECKED
+                $"\nA {template[1]} door blocks your path, pushing past it you enter the next room!\nA{template[0]} library lies beyond the {template[1]} door. \nFilled with old {template[2]} shelves with a variety of {template[3]} books, some laying strewn about the floor.\nIn the middle of the {template[4]} mess something stirs! Coming out from under a pile of {template[5]} books!",
+
+                //Arena string FULLY CHECKED! GOOD TO GO
+                $"\nA {template[1]} door blocks your path, pushing past it you enter the next room!\nA{template[0]} arena cascades out past the {template[1]} door.\nWide and vast the {template[1]} battleground with a variety of {template[3]} equipment laying about a variety of corpses.\nAcross the {template[4]} battleground another {template[1]} door begins to open! From the darkness a monster approaches, it's {template[5]} cloak falls away reveling itself!",
+                
+                //Library string FULLY CHECKED! GOOD TO GO
+                $"\nA {template[1]} door blocks your path, pushing past it you enter the next room!\nA{template[0]} library lies beyond the {template[1]} door. \nFilled with old {template[2]} shelves with a variety of {template[3]} books, some laying strewn about the floor.\nIn the middle of the {template[4]} mess something stirs! Coming out from under a pile of {template[5]} books!",
+                
+                "Treasure room",
+                
+                "I dunno"
             };
 
+            //This here randomized which room template is drawn from
             Random rand = new Random();
 
             int index = rand.Next(rooms.Length);
-
-
-
 
             string room = rooms[index];
 
@@ -148,7 +236,8 @@ namespace Dungeon
 
         }//end GetRoom()
 
-
+        //TODO use a room "treasure room" to spawn a chest with items rather than a monster. Maybe an switch checking specifically for the room's name?
+        //A list of lists. The inner most lists would be a bunch of adjetives and the second list would hold those to be selected from
 
 
 
