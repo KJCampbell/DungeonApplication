@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,18 +77,19 @@ namespace DungeonLibrary
         public static Monster GetMonster()
         {
             //Create a variety of monsters
-            Wolf m1 = new Wolf();
-            Bunny m2 = new Bunny();
-            Zombie m3 = new Zombie();
-            Monster m4 = new(name: "Smaug", hitChance: 65, block: 20, maxLife: 20, maxDamage: 15, minDamage: 1, describe: "The last great dragon.", false);
-
+            //Wolf m1 = new Wolf();
+            //Bunny m2 = new Bunny();
+            //Zombie m3 = new Zombie();
+            //Monster m4 = new(name: "Smaug", hitChance: 65, block: 20, maxLife: 20, maxDamage: 15, minDamage: 1, describe: "The last great dragon.", false);
+            Monster m5 = new("Practice Dummy", 80, 10, 100, 10, 1, "For practice", false);
 
             List<Monster> monsters = new()
             {
-                m1,m1,m1,m1,
-                m2,m2,m2,m2,
-                m3,m3,m3,
-                m4,
+                //m1,m1,m1,m1,
+                //m2,m2,m2,m2,
+                //m3,m3,m3,
+                //m4,
+                m5,
             };
             //Pick one at random to place in our dungeon room
             return monsters[new Random().Next(monsters.Count)];
