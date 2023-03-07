@@ -9,10 +9,10 @@ namespace DungeonLibrary
 {
     public class Zombie : Monster
     {
-        public int Revive { get; set; }
-        public Zombie(string name, int hitChance, int block, int maxLife, int maxDamage, int minDamage, string describe, bool twoStage, int revive) : base(name, hitChance, block, maxLife, maxDamage, minDamage, describe, twoStage)
+        public int Recover { get; set; }
+        public Zombie(string name, int hitChance, int block, int maxLife, int maxDamage, int minDamage, string describe, bool twoStage, int recover) : base(name, hitChance, block, maxLife, maxDamage, minDamage, describe, twoStage)
         {
-            Revive = revive;
+            Recover = recover;
 
         }
         public Zombie()
@@ -26,12 +26,12 @@ namespace DungeonLibrary
             Name = "Mostly Decayed Zombie";
             Describe = "It would probably fall apart if you left it alone";
             TwoStage = true;
-            Revive = 30;
+            Recover = 30;
 
         }//end default ctor
         public override string ToString()
         {
-            return string.Format("{0}\n{1}% chance it will come back to life after reaching 0 Health.", base.ToString(), Revive);
+            return string.Format("{0}\n{1}% chance it will come back to life after reaching 0 Health.", base.ToString(), Recover);
         }
 
     }

@@ -27,17 +27,17 @@ namespace DungeonLibrary
                     //BASIC
                     break;
                 case Race.Elf:
-                    //TODO figure out initive or somethin?
+                    HitChance += 5;
                     break;
                 case Race.Goblin:
-                    HitChance += 5;
+                    HitChance += 15;
                     break;
                 case Race.Giant:
                     MaxLife += 10;
                     //TODO Ask how to possibly override twohanded boolean so that almost all weapons count as one handed for giant//excluding bows and such
                     break;
                 case Race.Dwarf:
-                    MaxLife += 15;
+                    Block += 15;
                     //TODO damage resistances/types??? ask if possible with an efficient boolean check?
                     break;
                 case Race.Orc:

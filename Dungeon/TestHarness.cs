@@ -16,154 +16,142 @@ namespace Dungeon
     {
         static void Main(string[] args)
         {
-            //Build and test the functionality of our Library.
-            //Build and test a weapon
-            //Build and test a Character - test all methods
-
-
-            Console.Write("Please provide a name: ");
-            string givenName = Console.ReadLine();
-
-            //Weapon test
-            Console.WriteLine("============WEAPON SPAWN============");
-            Weapon firstWeapon = new Weapon();
-            firstWeapon.MaxDamage = 10;
-            firstWeapon.MinDamage = 5;
-            firstWeapon.Name = "Best Friend Sword";
-            firstWeapon.BonusHitChance = 10;
-            firstWeapon.IsTwoHanded = true;
-            firstWeapon.WeaponClass = WeaponType.Long_Sword;
-
-
-
-            Console.WriteLine(firstWeapon);
-            Console.WriteLine();
-
-
-            //Character test
-            Console.WriteLine("============PLAYER SPAWN============");
-            Player proto = new Player(givenName, 70, 15, 50, Race.Goblin, firstWeapon);
-            Console.WriteLine();
-            Console.WriteLine(proto);
-
-            //armor and sheild
-            //set up similar to weapon, make sheild unavailable when the weapon is twohanded
-
-
-
-            //Use this stupid. Such a simple
-            proto.PlayerRace = Race.Goblin;
-
-            Console.WriteLine("Select the race you want to play as:\nHuman(1):\nELf(2):\nGoblin(3):\nGiant(4):\nDwarf(5):\nOrc(6):");
-            string selRace = Console.ReadLine();
-            switch (selRace)
-            {
-                case "1":
-                    proto.PlayerRace = Race.Human;
-                    break;
-                case "2":
-                    break;
-                default:
-                    break;
-
-            }
-
-
-
-
-            //Methods test
-            Console.WriteLine("Testing Methods: \n" +
-                $"Whats the block? {proto.CalcBlock()}\n" +
-                $"What about DAMAGE? {proto.CalcDamage()}\n" +
-                $"But how likely is it to hit? {proto.CalcHitChance()}");
-            Console.WriteLine($"YOU DEAL {proto.CalcDamage()} DAMAGE!\n\n\n\n\n");
-
-
-            //Monster test
-            Console.WriteLine("============MONSTER SPAWN============");
-            Console.WriteLine(Monster.GetMonster());
-            Monster monster = Monster.GetMonster();
-            Console.WriteLine("\n\n*****************************************COMBAT\n\n");
-
-
-
-
-            //Variables for building the HP display bar
-            const int barFull = 100; //As a constant this will be used to ensure the bar printed remains the same size
-            int barHP = 0; //Initialized at 0, this value will be used to count as the HP bar is built
-
-            for (int i = 0; i < barFull; i++) //A basic build to establish size
-            {
-                
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("_");
-                Console.ResetColor();
-            }
-            Console.WriteLine($"\n{monster.Name} HP");
-
-
-            double lifeCheck = monster.Life;//it needs to be a double for math and stuff, because it becomes a decimal I guess?????
-            Console.Write("Press A to attack: ");
-            ConsoleKey userChoice = Console.ReadKey(true).Key;
-            switch (userChoice)
-            {
-                case ConsoleKey.A:
-                    //This is the makeshift damage calculation
-                    int dmg = new Random().Next(1, 26); //This placeholder represents where I would put the damage roll. IF I COULD GET TO IT
-                    lifeCheck = lifeCheck - dmg;
-                    break;
-            }
-            Console.WriteLine();
-
-            #region Full Bar Build
-            //The idea is to build this in such a way that it could be a method.
-            //What is stopping it being a method in the Combat class? getting the damage number since it is random between a few values AND IN A METHOD.
-
-
-
-            //First is a calculation to find the current health of the monster as a percentage.
-            //Since each monster will have different health values, using that value directly would cause the HP bar to vary in length and that would look bad
-            //The equation is simple. (X % Y) = X percent of Y Doing this allows the bar to remain a consistent size and gives a relative reference number for the bar
-            double perCheck = (lifeCheck % barFull); //This is the first half of the equation needed to keep the bar the same size
-            do//This loop prints Green
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("_");
-                Console.ResetColor();
-                barHP++;
-            } while (barHP < perCheck);
-            barHP = 0; //This sets the looping value back to 0 for the red portion
-            perCheck = barFull - perCheck; //This finds the left over value that needs to be red
-            do//This loop prints Red
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("_");
-                Console.ResetColor();
-                barHP++;
-            } while (barHP < perCheck);
-
+            #region Important Variables
+            int score = 0;
+            bool exit = false;
+            bool reload = false;
+            int damageDealt;
             #endregion
-            //Means of implimenting HP bar. Could go into the Combat warehouse of methods. Printed during the DoBattle method to show the monster's hp after the player attacks it
-            //Everything works as is, all that is needed is somehow applying the exact damage roll from the combat method to the equation
+            //Testing character
+            Weapon sword = new Weapon(8, 1, "Gladius", 10, false, WeaponType.Short_Sword);
+            Player player = new("Test", 70, 5, 40, Race.Human, sword);
 
-            /*
-             * public damage roll calcdamage
-             *get block chance
-             *get hit chance
-             *randomize damage
-             *
-             *damageroll dr = new damageroll(10,72)
-             *return dr;
-             * 
-             * 
-             * public class damage roll
-             *  public int damage  get set
-             *  public int random number get set
-             * 
-             */
+            //Thread.sleep
+            #region Action Loop
+
+            do
+            {
+                Monster monster = Monster.GetMonster();
+                Console.WriteLine($"In this room {monster.Name}!");
+                //Variables for building the HP display bar
+                const int barFull = 100; //As a constant this will be used to ensure the bar printed remains the same size
+                int barHP = 0; //Initialized at 0, this value will be used to count as the HP bar is built
+
+                for (int i = 0; i < barFull; i++) //First HP bar to start the fight
+                {
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("_");
+                    Console.ResetColor();
+                }
+                Console.WriteLine($"\n{monster.Name} HP");
+
+
+                //CNTRL +K+S to surround with region
+                reload = false;
+                do
+                {
+                    Console.Write("\nPlease choose an action:\n" +
+                        "A) Attack\n" +
+                        "R) Run away\n" +
+                        "X) Exit\n");
+                    ConsoleKey userChoice = Console.ReadKey(true).Key;
+                    Console.Clear();
+                    switch (userChoice)
+                    {
+                        case ConsoleKey.A:
+                            damageDealt = Combat.DoBattle(player, monster);
+                            Console.WriteLine($"{monster.Life} HP remaining");
+                            //check if the monster is dead
+                            if (monster.Life <= 0)
+                            {
+                                //Combat rewards, inventory system. money health whatever
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"\nYou killed {monster.Name}!");
+                                Console.ResetColor();
+                                reload = true;
+                                score++;
+                                //TODO Utalize the score counter to determine when a boss fight will occur. 
+                            }
+                            else
+                            {
+                                Console.WriteLine(damageDealt + " Damage dealt");
+                                #region Storage
+
+
+                                double lifeCheck = monster.Life;//it needs to be a double for math and stuff, because it becomes a decimal I guess?????
+                                #region Full Bar Build
+                                //The idea is to build this in such a way that it could be a method.
+                                //What is stopping it being a method in the Combat class? getting the damage number since it is random between a few values AND IN A METHOD.
 
 
 
-        }//end Main()
+                                //First is a calculation to find the current health of the monster as a percentage.
+                                //Since each monster will have different health values, using that value directly would cause the HP bar to vary in length and that would look bad
+                                //The equation is simple. (X % Y) = X percent of Y Doing this allows the bar to remain a consistent size and gives a relative reference number for the bar
+                                //double perCheck = (lifeCheck % barFull); //This is the first half of the equation needed to keep the bar the same size
+                                double perCheck = (monster.Life / (double)monster.MaxLife) * 100;
+                                barHP = 0;
+                                double greenCheck = perCheck;
+                                if (perCheck == 0)
+                                {
+                                    perCheck = 100;
+                                }
+                                do//This loop prints Green
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.Write("_");
+                                    Console.ResetColor();
+                                    barHP++;
+                                } while (barHP < perCheck);
+                                barHP = 0; //This sets the looping value back to 0 for the red portion
+                                perCheck = barFull - perCheck; //This finds the left over value that needs to be red
+                                double redCheck = perCheck;
+                                while (barHP < perCheck)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.Write("_");
+                                    Console.ResetColor();
+                                    barHP++;
+                                }
+                                Console.WriteLine($"\n{monster.Name} HP:");
+                                Console.WriteLine("perCheck right after green equation: " + greenCheck);
+                                Console.Write("perCheck right after red: " + redCheck);
+                                #endregion
+                                #endregion
+                            }
+                            break;
+
+
+                        case ConsoleKey.R:
+                            //TODO Attack of Opprotunity
+                            Console.WriteLine("Run away!!");
+                            Console.WriteLine($"{monster.Name} attacks you as you flee!");
+                            Combat.DoAttack(monster, player);
+                            Console.WriteLine();//Formatting
+                            reload = true;
+                            break;
+
+
+                        case ConsoleKey.X:
+                            Console.Clear();
+                            Console.WriteLine("Leaving..");
+                            exit = true;
+                            break;
+
+
+                        default:
+                            break;
+                    }
+
+
+                } while (!reload && !exit);
+
+            } while (!exit);
+
+
+                    #endregion
+
+                }//end Main()
     }//end class
 }//end namespace
