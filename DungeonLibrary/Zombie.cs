@@ -31,7 +31,7 @@ namespace DungeonLibrary
         }//end default ctor
         public override string ToString()
         {
-            return string.Format("{0}\n{1}% chance it will come back to life after reaching 0 Health.", base.ToString(), Recover);
+            return string.Format("{0}\n{1}% chance it will recover 3HP... Except not? Its broken?", base.ToString(), Recover);
         }
 
     }

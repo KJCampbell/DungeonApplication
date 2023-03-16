@@ -38,5 +38,16 @@ namespace DungeonLibrary
         {
             return string.Format("{0}\n{1}% chance it will focus on dodging.", base.ToString(), RunAwayChance, BlockBonus);
         }
+
+        public override int CalcBlock()
+        {
+            Random chance = new Random();
+            int percent = chance.Next(101);
+            if (percent <= RunAwayChance)
+            {
+                Block += BlockBonus;
+            }
+            return Block;
+        }
     }
 }
